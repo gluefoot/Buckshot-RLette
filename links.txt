@@ -1,0 +1,7 @@
+https://pynput.readthedocs.io/en/latest/index.html
+https://stackoverflow.com/questions/136734/key-presses-in-python
+https://github.com/minerllabs/minerl
+https://github.com/pyglet/pyglet
+https://stackoverflow.com/questions/43483121/simulate-xbox-controller-input-with-python
+https://pypi.org/project/vgamepad/
+https://buckshot-roulette.fandom.com/wiki/Modding
