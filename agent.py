@@ -1,6 +1,6 @@
 # w/ help from luc on SO: https://stackoverflow.com/questions/2090464/python-window-activation
 
-from mnk.keyboard_emulator import PressKey, ReleaseKey, VK_LEFT, VK_RIGHT, VK_RETURN, VK_ESCAPE
+from mnk.keyboard_emulator import PressKey, ReleaseKey, VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN, VK_RETURN, VK_ESCAPE
 import win32gui
 import re
 import time
@@ -30,16 +30,134 @@ class WindowMgr:
         """put the window in the foreground"""
         win32gui.SetForegroundWindow(self._handle)
 
+class Agent:
+
+    def __init__(self):
+        """Constructor"""
+        self.wmgr = WindowMgr()
+
+    def refocus(self):
+        self.wmgr = WindowMgr()
+        self.wmgr.find_window_wildcard(".*Buckshot.*")
+        self.wmgr.set_foreground()
+
+    def new_episode(self):
+        self.refocus()
+
+        time.sleep(5)
+
+        print("Going to main menu...")
+        # go to main menu
+        PressKey(VK_ESCAPE)
+        time.sleep(3)
+        ReleaseKey(VK_ESCAPE)
+
+        time.sleep(10)
+
+        print("Selecting `Start`...")
+        # select "start"
+        PressKey(VK_UP)
+        ReleaseKey(VK_UP)
+        time.sleep(0.25)
+        PressKey(VK_DOWN)
+        ReleaseKey(VK_DOWN)
+        time.sleep(0.25)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(12)
+
+        print("Selecting pills...")
+        # select pills
+        PressKey(VK_LEFT)
+        ReleaseKey(VK_LEFT)
+        time.sleep(0.5)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(5)
+        
+        print("Selecting `Yes`...")
+        # select "yes"
+        PressKey(VK_LEFT)
+        ReleaseKey(VK_LEFT)
+        time.sleep(0.5)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(5)
+
+        print("Kicking First Door...")
+        # kick first door
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(5)
+
+        print("Kicking Second Door...")
+        # kick second door
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(15)
+        
+        print("Picking up the waiver...")
+        # pick up waiver
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+
+        time.sleep(5)
+
+        # sign "name"
+        # b
+        PressKey(VK_RIGHT)
+        ReleaseKey(VK_RIGHT)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+        time.sleep(0.25)
+
+        # o
+        for _ in range(4):
+            PressKey(VK_DOWN)
+            ReleaseKey(VK_DOWN)
+            time.sleep(0.1)
+        for _ in range(2):
+            PressKey(VK_RIGHT)
+            ReleaseKey(VK_RIGHT)
+            time.sleep(0.1)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+        time.sleep(0.25)
+
+        # t
+        for _ in range(2):
+            PressKey(VK_DOWN)
+            ReleaseKey(VK_DOWN)
+            time.sleep(0.1)
+        for _ in range(3):
+            PressKey(VK_LEFT)
+            ReleaseKey(VK_LEFT)
+            time.sleep(0.1)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+        time.sleep(0.25)
+
+        # <enter>
+        for _ in range(4):
+            PressKey(VK_UP)
+            ReleaseKey(VK_UP)
+            time.sleep(0.1)
+        for _ in range(2):
+            PressKey(VK_RIGHT)
+            ReleaseKey(VK_RIGHT)
+            time.sleep(0.1)
+        PressKey(VK_RETURN)
+        ReleaseKey(VK_RETURN)
+        time.sleep(0.25)
+
+
+
+
 if __name__ == "__main__":
-    w = WindowMgr()
-    w.find_window_wildcard(".*Buckshot.*")
-    w.set_foreground()
-    PressKey(VK_LEFT)
-    ReleaseKey(VK_LEFT)
-    time.sleep(2)
-    PressKey(VK_RIGHT)
-    ReleaseKey(VK_RIGHT)
-    time.sleep(2)
-    PressKey(VK_ESCAPE)
-    time.sleep(3)
-    ReleaseKey(VK_ESCAPE)
+    agent = Agent()
+    agent.new_episode()
